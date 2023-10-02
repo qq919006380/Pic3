@@ -22,7 +22,7 @@ const MainNavgation = () => {
         </li>
 
         <li>
-          <Link href="/asset">Assect</Link>
+          <Link href="/picture">Picture</Link>
         </li>
         <li>
           {/* <SignInButton onClick={handleUserClick} message={"Hello world"}>

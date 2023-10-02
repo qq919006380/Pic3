@@ -29,11 +29,11 @@ const TableComponent = ({ cid, url, filename, loading }) => {
   return (
     <div className="w-full">
       <p className="text-lg font-semibold mb-2 text-center my-10">
-        {cid && <span className="text-2xl text-green-500">✓</span>}
         <span>CID: {cid}</span>
+        {cid && <span className="text-2xl text-green-500">✓</span>}
       </p>
       {/* 左右布局 左边预览图右边表格 */}
-      <div className=" flex">
+      <div className=" flex space-x-4">
         <div className="w-2/5">
           <div className="border-dashed border-2 border-gray-300 p-4 rounded-lg text-center h-full">
             <div className=" font-bold text-left">Preview</div>

@@ -12,6 +12,7 @@
     "@mui/material": "^5.11.6",
     "@rainbow-me/rainbowkit": "^1",
     "axios": "^1.2.2",
+    "clipboard": "^2.0.11",
     "ethers": "5.7.2",
     "next": "^13.1.2",
     "nextjs-progressbar": "^0.0.16",
@@ -19,6 +20,8 @@
     "notistack": "^2.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loader-spinner": "^5.4.5",
+    "styled-components": "^6.0.8",
     "viem": "^1.10.1",
     "wagmi": "^1.3.11"
   },

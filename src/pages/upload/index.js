@@ -1,20 +1,20 @@
 import PropTypes from "prop-types";
 import React from "react";
-import WriteButton from "../../components/button/WriteButton";
+import UploadButton from "../../components/button/UploadButton";
 import { ABI } from "../../config/constant";
 
 const MintPage = (props) => {
   return (
     <div id="mainContainer">
       <h1>The Mint Page</h1>
-      <WriteButton
+      <UploadButton
         abi={props.abi}
-        functionName={"mint"}
-        args={[1]}
+        functionName={"addCID"}
+        args={['123']}
         value={"0.01"}
       >
         Mint
-      </WriteButton>
+      </UploadButton>
     </div>
   );
 };

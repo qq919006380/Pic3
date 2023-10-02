@@ -18,7 +18,7 @@ const MainNavgation = () => {
         </li>
 
         <li>
-          <Link href="/mint">Mint</Link>
+          <Link href="/upload">Upload</Link>
         </li>
 
         <li>

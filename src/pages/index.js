@@ -25,12 +25,12 @@ export async function getStaticProps() {
   );
 
   const contract = new ethers.Contract(DEFAULT_CONTRACT_ADDRESS, abi, provider);
-  const name = await contract.name();
-  console.log("NAME", name);
+  // const name = await contract.name();
+  console.log("NAME", contract);
 
   return {
     props: {
-      name,
+      // name,
       abi,
     }, // will be passed to the page component as props
   };

@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+@import "./iconfont//iconfont.css";
 
 html,
 body {

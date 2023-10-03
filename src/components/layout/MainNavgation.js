@@ -1,15 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import classes from "../../../styles/MainNavgation.module.css";
-// import SignInButton from "../button/SignInButton";
-import { useRouter } from "next/router";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const MainNavgation = () => {
-  const router = useRouter();
-  const handleUserClick = () => {
-    router.push("/user");
-  };
+  
   return (
     <nav className={classes.navigateBar}>
       <ul>
@@ -24,11 +19,7 @@ const MainNavgation = () => {
         <li>
           <Link href="/picture">Picture</Link>
         </li>
-        <li>
-          {/* <SignInButton onClick={handleUserClick} message={"Hello world"}>
-            My Account
-          </SignInButton> */}
-        </li>
+         
       </ul>
       <ConnectButton />
     </nav>

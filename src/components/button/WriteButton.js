@@ -23,7 +23,7 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
     address: DEFAULT_CONTRACT_ADDRESS,
     abi,
     functionName,
-    value: parseEther(value),
+    // value: parseEther(value),
     args,
   });
 

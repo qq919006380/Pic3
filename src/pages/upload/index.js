@@ -1,24 +1,31 @@
-import PropTypes from "prop-types";
 import Table from "./Table";
-import { ABI } from "../../config/constant";
-import { createNFTStorageConnector } from "../../utils/uploader-connector/NFT.storage";
 
+import { createNFTStorageConnector } from "../../utils/uploader-connector/NFT.storage";
+import useLocalStorage from "use-local-storage-state";
 import { useState, useEffect } from "react";
-import WriteButton from "../../components/button/WriteButton";
+
 const token = process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN;
 const connector = createNFTStorageConnector({ token });
 
 const MintPage = (props) => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [imgCache, setImgCache] = useLocalStorage("imgCache", []);
+  const [curBlobUrl, setCurBlobUrl] = useState([]);
   const [cidInfo, setCidInfo] = useState({
     cid: "",
-    url: "",
     filename: "",
+    url: "",
   });
 
   useEffect(() => {
-    uploadToIPFS();
+    const fetchData = async () => {
+      await uploadToIPFS();
+      const blob = await new Response(file).blob();
+      let blobUrl = URL.createObjectURL(blob);
+      setCurBlobUrl([blobUrl]);
+    };
+    fetchData();
   }, [file]);
 
   // 上传到IPFS
@@ -37,8 +44,16 @@ const MintPage = (props) => {
       });
 
     if (result) {
+      !imgCache && setImgCache([]);
       setCidInfo({ ...result, filename: file.name });
+
+      let newImgCache = [
+        ...imgCache,
+        { cid: result.cid, filename: file.name, url: result.url },
+      ];
+      setImgCache(newImgCache);
     }
+
     setLoading(false);
   };
   const handleFileChange = (event) => {
@@ -92,30 +107,15 @@ const MintPage = (props) => {
           </p>
         )}
       </div>
-      <Table cid={cidInfo.cid} filename={cidInfo.filename} loading={loading} />
 
-      {/* <WriteButton
-          abi={props.abi}
-          functionName={"addCID"}
-          args={["123"]}
-          value={"0.01"}
-        >
-          save
-        </WriteButton> */}
+      <Table
+        cid={cidInfo.cid}
+        filename={cidInfo.filename}
+        loading={loading}
+        curBlobUrl={curBlobUrl}
+      />
     </div>
   );
-};
-
-export async function getStaticProps() {
-  return {
-    props: {
-      abi: ABI,
-    }, // will be passed to the page component as props
-  };
-}
-
-MintPage.propTypes = {
-  abi: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default MintPage;

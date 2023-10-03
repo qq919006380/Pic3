@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSnackbar } from "notistack";
-import gatewayList from "./gatewayList";
+import gatewayList from "../../config/gatewayList";
 import { copyText } from "../../utils/tools";
 import { Dna } from "react-loader-spinner";
-
+import { ABI } from "../../config/constant";
+import WriteButton from "../../components/button/WriteButton";
 import styled from "styled-components";
 
 const SpanWarp = styled.span`
@@ -12,7 +13,7 @@ const SpanWarp = styled.span`
   hyphens: auto; /* 如果需要，可以启用连字符号断字 */
   white-space: normal;
 `;
-const TableComponent = ({ cid, url, filename, loading }) => {
+const TableComponent = ({ cid, url, filename, loading, curBlobUrl }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [gatewayType, setGatewayType] = useState("ipfs.io");
   const getterIpfs = () => {
@@ -28,10 +29,28 @@ const TableComponent = ({ cid, url, filename, loading }) => {
   };
   return (
     <div className="w-full">
-      <p className="text-lg font-semibold mb-2 text-center my-10">
-        <span>CID: {cid}</span>
-        {cid && <span className="text-2xl text-green-500">✓</span>}
-      </p>
+      <div className="text-lg font-semibold mb-2 text-center my-10 space-x-3">
+        <span className="space-x-1">
+          <span>CID:</span>
+          {cid ? (
+            <span className="space-x-3">
+              <span>{cid}</span>
+              <WriteButton
+                abi={ABI}
+                functionName={"addImages"}
+                args={[[cid || "null"], [filename || "null"]]}
+                value={"0"}
+              >
+                <span className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Store on the blockchain
+                </span>
+              </WriteButton>
+            </span>
+          ) : (
+            <span className="text-gray-400 mx-2">No Data</span>
+          )}
+        </span>
+      </div>
       {/* 左右布局 左边预览图右边表格 */}
       <div className=" flex space-x-4">
         <div className="w-2/5">
@@ -40,7 +59,7 @@ const TableComponent = ({ cid, url, filename, loading }) => {
             {cid ? (
               <img
                 className="w-4/5 h-full mx-auto  object-contain inline-block"
-                src={getterIpfs()}
+                src={curBlobUrl[0]}
                 alt="preview"
               />
             ) : (

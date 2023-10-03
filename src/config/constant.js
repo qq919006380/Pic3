@@ -1,5 +1,5 @@
 export const DEFAULT_CONTRACT_ADDRESS =
-  "0x4C27AD26C8Bcf6F599A3e74fddf8545Afe22D684";
+  "0x8Ca91253e35Aa64BB2f3d5A14A2BF43ecd520E59";
 
 export const GAS_LIMIT_MULTIPLIER = 1.2;
 
@@ -9,12 +9,17 @@ export const ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_cid",
-				"type": "string"
+				"internalType": "string[]",
+				"name": "_cids",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_names",
+				"type": "string[]"
 			}
 		],
-		"name": "addCID",
+		"name": "addImages",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -30,13 +35,51 @@ export const ABI = [
 			},
 			{
 				"indexed": false,
-				"internalType": "string",
-				"name": "cid",
-				"type": "string"
+				"internalType": "string[]",
+				"name": "cids",
+				"type": "string[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "string[]",
+				"name": "names",
+				"type": "string[]"
 			}
 		],
-		"name": "CIDAdded",
+		"name": "ImagesAdded",
 		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string[]",
+				"name": "cids",
+				"type": "string[]"
+			}
+		],
+		"name": "ImagesRemoved",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[]",
+				"name": "_cids",
+				"type": "string[]"
+			}
+		],
+		"name": "removeImages",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -46,12 +89,24 @@ export const ABI = [
 				"type": "address"
 			}
 		],
-		"name": "getUserCIDs",
+		"name": "getUserImages",
 		"outputs": [
 			{
-				"internalType": "string[]",
+				"components": [
+					{
+						"internalType": "string",
+						"name": "cid",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"internalType": "struct DecentralizedImageUpload.Image[]",
 				"name": "",
-				"type": "string[]"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

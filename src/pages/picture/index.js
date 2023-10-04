@@ -7,8 +7,9 @@ import { copyText, transformString } from "@/utils/tools";
 import { useSnackbar } from "notistack";
 import WriteButton from "@/components/button/WriteButton";
 import Table from "@/components/Table";
-
 import Modal from "react-modal";
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement("body");
 
 // removeImages
 const PicturePage = () => {
@@ -28,6 +29,7 @@ const PicturePage = () => {
   });
 
   useEffect(() => {
+    console.log(resBlockData);
     if (resBlockData) {
       setBlockData(resBlockData);
     }
@@ -46,6 +48,16 @@ const PicturePage = () => {
     );
   }, []);
 
+  let deleteImgCache = () => {
+    setImgCache((prevCache) => prevCache.filter((item) => !item.select));
+  };
+  let handleStoreSuccess = (args) => {
+    // 根据args去删除imgCache
+    setImgCache((prevCache) =>
+      prevCache.filter((item) => !args[0].includes(item.cid))
+    );
+    refetch();
+  };
   return (
     <div className="container mx-auto">
       <div className="text-lg font-semibold mb-2 text-center my-10">
@@ -63,7 +75,10 @@ const PicturePage = () => {
             </div>
             <ImgBox list={imgCache} setFunc={setImgCache}></ImgBox>
             <div className="text-right mt-8 space-x-3">
-              <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400">
+              <div
+                onClick={deleteImgCache}
+                className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400"
+              >
                 Delete Selected
               </div>
 
@@ -71,10 +86,11 @@ const PicturePage = () => {
                 abi={ABI}
                 functionName={"addImages"}
                 args={[
-                  imgCache?.map((v) => v.cid),
-                  imgCache?.map((v) => v.cid),
+                  imgCache?.filter((v) => v.select).map((v) => v.cid),
+                  imgCache?.filter((v) => v.select).map((v) => v.name),
                 ]}
                 value={"0"}
+                onClick={handleStoreSuccess}
               >
                 <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-b50">
                   Store on the blockchain →
@@ -119,9 +135,6 @@ const customStyles = {
   },
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("body");
-
 const ImgBox = ({ list, setFunc }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -140,8 +153,21 @@ const ImgBox = ({ list, setFunc }) => {
         <div className="grid grid-cols-5 gap-2">
           {list.map((v, i) => (
             <div key={v.cid + i}>
-              <div className="relative group shadow">
-                <div className="absolute opacity-0 group-hover:opacity-100 bg-white bg-opacity-40 h-full transition duration-300  w-full  ">
+              {v.isLoading && (
+                <div
+                  className={`  bg-gray-200 animate-pulse text-center inline-block rounded  my-3 text-gray-300 text-5xl iconfont icon-tuwen ${
+                    v.isLoading ? "visible" : "hidden"
+                  }`}
+                ></div>
+              )}
+              <div
+                className={`relative group shadow ${
+                  v.isLoading && "visible w-0 h-0 overflow-hidden"
+                }`}
+              >
+                <div
+                  className={`absolute opacity-0 group-hover:opacity-100 bg-white bg-opacity-40 h-full transition duration-300  w-full  `}
+                >
                   <i
                     onClick={async () => {
                       let flag = await copyText(v.cid);
@@ -159,7 +185,7 @@ const ImgBox = ({ list, setFunc }) => {
                     className="absolute right-1 top-1 iconfont icon-fuzhi text-gray-800 font-medium cursor-pointer"
                   ></i>
                   <i
-                    title="copy cid"
+                    title="detail"
                     className="absolute right-8 top-1 iconfont icon-photo text-gray-800 font-medium cursor-pointer"
                     onClick={() => {
                       openModal(v);
@@ -188,19 +214,9 @@ const ImgBox = ({ list, setFunc }) => {
                     <i className="iconfont   icon-xuanzhong1-copy text-xl absolute -top-2   -left-1 text-green-500"></i>
                   )}
                 </div>
-
                 <div className="text-center">
-                  {v.isLoading && (
-                    <div
-                      className={`  bg-gray-200 animate-pulse text-center inline-block rounded  my-3 text-gray-300 text-5xl iconfont icon-tuwen ${
-                        v.isLoading ? "visible" : "hidden"
-                      }`}
-                    >
-                      {" "}
-                    </div>
-                  )}
                   <img
-                    className=" visible w-full mr-2 inline-block"
+                    className=" visible w-full mr-2 inline-block min-h-[5rem] object-cover"
                     src={`https://ipfs.io/ipfs/${v.cid}`}
                     alt=""
                     onLoad={(onLoad) => {
@@ -217,7 +233,7 @@ const ImgBox = ({ list, setFunc }) => {
                 </div>
               </div>
               <div className="text-blue-500 mt-2 text-xs font-mono text-left break-all">
-                {!v.isLoading && v.name}
+                {  v.name}
               </div>
             </div>
           ))}
@@ -227,6 +243,7 @@ const ImgBox = ({ list, setFunc }) => {
       )}
 
       <Modal
+        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
@@ -236,10 +253,7 @@ const ImgBox = ({ list, setFunc }) => {
           <div className="text-lg font-semibold     ">
             <span>Detail</span>
           </div>
-          <div
-            onClick={closeModal}
-            className="iconfont icon-remove1  "
-          ></div>
+          <div onClick={closeModal} className="iconfont icon-remove1  "></div>
         </div>
 
         <Table
@@ -252,27 +266,4 @@ const ImgBox = ({ list, setFunc }) => {
   );
 };
 
-const isBrowser = !!(
-  typeof window !== "undefined" &&
-  window.document &&
-  window.document.createElement
-);
-
-const Lazy = ({ children }) => {
-  if (isBrowser) {
-    console.log("Lazy");
-    return (
-      <LazyLoad
-        placeholder={<div>Loading...</div>}
-        height={200}
-        once
-        className="w-full mr-2 inline-block"
-      >
-        {children}
-      </LazyLoad>
-    );
-  } else {
-    return <div> asd{children}</div>;
-  }
-};
 export default PicturePage;

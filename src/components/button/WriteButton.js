@@ -12,7 +12,7 @@ import {
 } from "../../config/constant";
 import { CircularProgress } from "@mui/material";
 import { useSnackbar } from "notistack";
-
+ 
 const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
   const { enqueueSnackbar } = useSnackbar();
   const {
@@ -54,6 +54,8 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
   useEffect(() => {
     if (txnIsSuccess) {
       console.log("Transaction success", txnRes);
+      enqueueSnackbar("Transaction success", { variant: "success" });
+      onClick?.(args);
     }
   }, [txnIsSuccess]);
 
@@ -65,8 +67,8 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
 
   useEffect(() => {
     if (writeIsError) {
-      let message=JSON.parse(JSON.stringify(writeError))?.shortMessage
-      console.log("write error", message)
+      let message = JSON.parse(JSON.stringify(writeError))?.shortMessage;
+      console.log("write error", message);
       enqueueSnackbar(message, { variant: "error" });
     }
   }, [writeIsError]);
@@ -78,8 +80,11 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
   }, [prepareIsError]);
 
   const handleClick = () => {
-    write?.();
-    onClick?.();
+    if (args[0][0] && args[0][0].length > 0) {
+      write?.();
+    } else {
+      enqueueSnackbar("Please upload image", { variant: "warning" });
+    }
   };
   return (
     <>

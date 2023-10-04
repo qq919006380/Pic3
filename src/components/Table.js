@@ -57,8 +57,8 @@ const TableComponent = ({ cid, name, loading }) => {
           >
             <thead>
               <tr>
-                <th className="px-4 py-2">TYPE</th>
-                <th className="px-4 py-2">URL</th>
+                <th className="px-4 py-2 w-3/12">TYPE</th>
+                <th className="px-4 py-2 w-9/12">URL</th>
               </tr>
             </thead>
             <tbody>

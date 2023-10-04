@@ -1,5 +1,6 @@
 const gatewayList = [
   { name: "ipfs.io", url: "https://ipfs.io/ipfs/" },
+  { name: "nft.storage", url: "https://nftstorage.link/ipfs/" },
   { name: "ipfs.fleek.co", url: "https://ipfs.fleek.co/ipfs/" },
   { name: "cloudflare-ipfs.com", url: "https://cloudflare-ipfs.com/ipfs/" },
   { name: "ipfs.infura.io", url: "https://ipfs.infura.io/ipfs/" },

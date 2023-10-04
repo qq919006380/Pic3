@@ -1,4 +1,4 @@
-import Table from "./Table";
+import Detail from "./Detail";
 
 import { createNFTStorageConnector } from "../../utils/uploader-connector/NFT.storage";
 import useLocalStorage from "use-local-storage-state";
@@ -14,7 +14,7 @@ const MintPage = (props) => {
   const [curBlobUrl, setCurBlobUrl] = useState([]);
   const [cidInfo, setCidInfo] = useState({
     cid: "",
-    filename: "",
+    name: "",
     url: "",
   });
 
@@ -45,12 +45,17 @@ const MintPage = (props) => {
 
     if (result) {
       !imgCache && setImgCache([]);
-      setCidInfo({ ...result, filename: file.name });
+      setCidInfo({ ...result, name: file.name });
 
       let newImgCache = [
         ...imgCache,
-        { cid: result.cid, filename: file.name, url: result.url },
+        { cid: result.cid, name: file.name, url: result.url },
       ];
+      // 根据cid去重
+      newImgCache = newImgCache.reduce((acc, cur) => {
+        const has = acc.some((v) => v.cid === cur.cid);
+        return has ? acc : [...acc, cur];
+      }, []);
       setImgCache(newImgCache);
     }
 
@@ -108,9 +113,9 @@ const MintPage = (props) => {
         )}
       </div>
 
-      <Table
+      <Detail
         cid={cidInfo.cid}
-        filename={cidInfo.filename}
+        name={cidInfo.name}
         loading={loading}
         curBlobUrl={curBlobUrl}
       />

@@ -65,7 +65,9 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
 
   useEffect(() => {
     if (writeIsError) {
-      enqueueSnackbar(writeError.message, { variant: "error" });
+      let message=JSON.parse(JSON.stringify(writeError))?.shortMessage
+      console.log("write error", message)
+      enqueueSnackbar(message, { variant: "error" });
     }
   }, [writeIsError]);
 

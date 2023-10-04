@@ -24,3 +24,13 @@ export function copyText(textToCopy) {
     document.body.removeChild(dom); // 移除临时元素
   });
 }
+
+
+// 将地址省略
+export function transformString(originalString,range=[4,4]) {
+  if (originalString.length <= 10) {
+    return originalString;
+  }
+
+  return `${originalString.slice(0, range[0])}...${originalString.slice(-range[1])}`;
+}

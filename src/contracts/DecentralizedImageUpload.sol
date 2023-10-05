@@ -52,8 +52,8 @@ contract DecentralizedImageUpload {
         emit ImagesRemoved(msg.sender, _cids);
     }
 
-    function getUserImages(address _user) public view returns (Image[] memory) {
-        return users[_user].images;
+    function getUserImages() public view returns (Image[] memory) {
+        return users[msg.sender].images;
     }
 
     function getUserImageIndex(address _user, string memory _cid) internal view returns (uint256) {

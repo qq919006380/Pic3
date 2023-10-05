@@ -6,16 +6,16 @@ export const CHAIN_MAP = {
   },
   97: {
     contarctAddress: "0x8Ca91253e35Aa64BB2f3d5A14A2BF43ecd520E59",
-	chainName: "BSC Testnet",
+    chainName: "BSC Testnet",
   },
-  
+
   314: {
     contarctAddress: "x",
-	chainName: "Filecoin - Mainnet",
+    chainName: "Filecoin - Mainnet",
   },
   314159: {
     contarctAddress: "0xb8Ca0CA732E447A3653c3FfaE770296E1a7077cb",
-	chainName: "Filecoin - Calibration testnet",
+    chainName: "Filecoin - Calibration testnet",
   },
 };
 

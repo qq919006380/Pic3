@@ -1,15 +1,16 @@
 // Landing page
-import React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ABI, CHAIN_MAP } from "../config/constant";
-import { ethers } from "ethers";
-import { useChainId } from "wagmi";
+
 function HomePage(props) {
-  console.log(props);
+  
   return (
     <div className="bg-gradient-to-b from-indigo-800 to-purple-900 text-white min-h-screen">
       <header className="py-10 text-center">
-        <h1 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">Welcome to Web3</h1>
+        <h1 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">
+          Welcome to Web3
+        </h1>
         <p className="mt-4 text-lg">Explore the Decentralized Future</p>
       </header>
 
@@ -79,7 +80,7 @@ export async function getStaticProps() {
   return {
     props: {
       abi,
-    },  
+    },
   };
 }
 

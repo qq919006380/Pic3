@@ -1,5 +1,8 @@
 // pages/AssetPage.js
 import { useContractRead, useAccount, useChainId } from "wagmi";
+import { hexToString, toHex } from "viem";
+import CryptoJS from "crypto-js";
+
 import useLocalStorage from "use-local-storage-state";
 import { ABI, CHAIN_MAP } from "@/config/constant";
 import { useEffect, useState } from "react";
@@ -19,24 +22,28 @@ const PicturePage = () => {
 
   const [blockData, setBlockData] = useState([]);
   const [imgCache, setImgCache] = useLocalStorage("imgCache", []);
+
   const {
-    data: resBlockData,
+    data: hex,
     isError,
     isLoading,
     refetch,
   } = useContractRead({
     address: CHAIN_MAP[chainId].contarctAddress,
     abi: ABI,
-    functionName: "getUserImages",
-    args: [address],
+    functionName: "retrieveToken",
+    args: [],
+    account: address,
   });
 
   useEffect(() => {
-    console.log(resBlockData);
-    if (resBlockData) {
-      setBlockData(resBlockData);
+    let ciphertext = hexToString(hex, { size: 280 });
+    var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+    var resBlock = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if (resBlock) {
+      setBlockData(resBlock);
     }
-  }, [resBlockData, address]);
+  }, [address,hex]);
 
   useEffect(() => {
     setImgCache((prevCache) =>
@@ -89,7 +96,7 @@ const PicturePage = () => {
               Delete Selected
             </div>
 
-            <WriteButton
+            {/* <WriteButton
               abi={ABI}
               functionName={"addImages"}
               args={[
@@ -102,7 +109,7 @@ const PicturePage = () => {
               <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-b50">
                 Store on the blockchain →
               </div>
-            </WriteButton>
+            </WriteButton> */}
           </div>
         </div>
         <div className="w-1/2 min-h-[20rem]">
@@ -119,7 +126,7 @@ const PicturePage = () => {
             <ImgBox list={blockData} setFunc={setBlockData}></ImgBox>
           </div>
           <div className="text-right  mt-3 space-x-3">
-            <WriteButton
+            {/* <WriteButton
               abi={ABI}
               functionName={"removeImages"}
               args={[blockData?.filter((v) => v.select).map((v) => v.cid)]}
@@ -129,7 +136,7 @@ const PicturePage = () => {
               <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400">
                 Delete Selected
               </div>
-            </WriteButton>
+            </WriteButton> */}
             <div
               onClick={() => {
                 refetch();

@@ -66,7 +66,7 @@ const TableComponent = ({ cid, name, loading }) => {
                 <td className="border px-4 py-2">Ipfs</td>
                 <td className="border px-4 py-2 break-all text-left">
                   <span
-                    className="text-blue-500 cursor-pointer hover:opacity-80    break-all"
+                    className="text-blue-500 text-sm cursor-pointer hover:opacity-80    break-all"
                     onClick={() => copyUrl(`ipfs://${cid}`)}
                   >
                     {cid && `ipfs://${cid}`}
@@ -77,7 +77,7 @@ const TableComponent = ({ cid, name, loading }) => {
                 <td className="border px-4 py-2">Gateway</td>
                 <td className="border px-4 py-2 break-all text-left">
                   <span
-                    className="text-blue-500 cursor-pointer hover:opacity-80    break-all"
+                    className="text-blue-500 text-sm cursor-pointer hover:opacity-80    break-all"
                     onClick={() => copyUrl(getterIpfs())}
                   >
                     {cid && getterIpfs()}
@@ -88,7 +88,7 @@ const TableComponent = ({ cid, name, loading }) => {
                 <td className="border px-4 py-2">Markdown</td>
                 <td className="border px-4 py-2 text-left">
                   <span
-                    className="text-blue-500 cursor-pointer hover:opacity-80    break-all"
+                    className="text-blue-500 text-sm cursor-pointer hover:opacity-80    break-all"
                     onClick={() => copyUrl(`[${name}](${getterIpfs()})`)}
                   >
                     {cid && `[${name}](${getterIpfs()})`}
@@ -100,7 +100,7 @@ const TableComponent = ({ cid, name, loading }) => {
                 <td className="border px-4 py-2">HTML</td>
                 <td className="border px-4 py-2 text-left">
                   <span
-                    className="text-blue-500 cursor-pointer hover:opacity-80    break-all"
+                    className="text-blue-500 text-sm cursor-pointer hover:opacity-80    break-all"
                     onClick={() =>
                       copyUrl(
                         `<a href="${getterIpfs()}"><img src="${getterIpfs()}" alt="${name}" border="0" /></a>`

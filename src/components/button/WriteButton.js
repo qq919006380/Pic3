@@ -4,10 +4,11 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useChainId,
 } from "wagmi";
 import { parseEther } from "viem";
 import {
-  DEFAULT_CONTRACT_ADDRESS,
+  CHAIN_MAP,
   GAS_LIMIT_MULTIPLIER,
 } from "../../config/constant";
 import { CircularProgress } from "@mui/material";
@@ -15,12 +16,13 @@ import { useSnackbar } from "notistack";
  
 const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const chainId = useChainId();
   const {
     config,
     isError: prepareIsError,
     error: prepareError,
   } = usePrepareContractWrite({
-    address: DEFAULT_CONTRACT_ADDRESS,
+    address: CHAIN_MAP[chainId].contarctAddress,
     abi,
     functionName,
     // value: parseEther(value),
@@ -83,7 +85,7 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
     if (args[0][0] && args[0][0].length > 0) {
       write?.();
     } else {
-      enqueueSnackbar("Please upload image", { variant: "warning" });
+      enqueueSnackbar("Please select images", { variant: "warning" });
     }
   };
   return (
@@ -91,6 +93,7 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
       <button
         disabled={!write || writeIsLoading || txnIsLoading}
         onClick={handleClick}
+        className=" p-0"
         id="inherit-button"
       >
         {children}

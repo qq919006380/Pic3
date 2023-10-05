@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { bsc, bscTestnet } from "wagmi/chains";
+import { bsc, bscTestnet ,filecoin,filecoinCalibration} from "wagmi/chains";
 import { WagmiConfig,configureChains, createConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -12,7 +12,7 @@ import Layout from "../components/layout/Layout";
 import PropTypes from "prop-types";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bsc, bscTestnet],
+  [bsc, bscTestnet,filecoin,filecoinCalibration],
   [publicProvider()]
 );
 

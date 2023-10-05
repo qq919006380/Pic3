@@ -1,7 +1,7 @@
 // pages/AssetPage.js
-import { useContractRead, useAccount } from "wagmi";
+import { useContractRead, useAccount, useChainId } from "wagmi";
 import useLocalStorage from "use-local-storage-state";
-import { ABI, DEFAULT_CONTRACT_ADDRESS } from "@/config/constant";
+import { ABI, CHAIN_MAP } from "@/config/constant";
 import { useEffect, useState } from "react";
 import { copyText, transformString } from "@/utils/tools";
 import { useSnackbar } from "notistack";
@@ -14,6 +14,9 @@ Modal.setAppElement("body");
 // removeImages
 const PicturePage = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
+  const chainId = useChainId();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [blockData, setBlockData] = useState([]);
   const [imgCache, setImgCache] = useLocalStorage("imgCache", []);
   const {
@@ -22,7 +25,7 @@ const PicturePage = () => {
     isLoading,
     refetch,
   } = useContractRead({
-    address: DEFAULT_CONTRACT_ADDRESS,
+    address: CHAIN_MAP[chainId].contarctAddress,
     abi: ABI,
     functionName: "getUserImages",
     args: [address],
@@ -56,15 +59,18 @@ const PicturePage = () => {
     setImgCache((prevCache) =>
       prevCache.filter((item) => !args[0].includes(item.cid))
     );
-    refetch();
+    setTimeout(() => {
+      refetch();
+    }, 1000);
   };
+
   return (
     <div className="container mx-auto">
       <div className="text-lg font-semibold mb-2 text-center my-10">
         <span>My Picture</span>
       </div>
       <div className=" flex space-x-4">
-        <div className="w-1/2">
+        <div className="w-1/2 min-h-[20rem]">
           <div className="border-dashed border-2 border-gray-300 p-4 rounded-lg text-left h-full">
             <div className=" font-bold ">
               <span>Browser Cache </span>
@@ -74,32 +80,32 @@ const PicturePage = () => {
               </div>
             </div>
             <ImgBox list={imgCache} setFunc={setImgCache}></ImgBox>
-            <div className="text-right mt-8 space-x-3">
-              <div
-                onClick={deleteImgCache}
-                className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400"
-              >
-                Delete Selected
-              </div>
-
-              <WriteButton
-                abi={ABI}
-                functionName={"addImages"}
-                args={[
-                  imgCache?.filter((v) => v.select).map((v) => v.cid),
-                  imgCache?.filter((v) => v.select).map((v) => v.name),
-                ]}
-                value={"0"}
-                onClick={handleStoreSuccess}
-              >
-                <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-b50">
-                  Store on the blockchain →
-                </div>
-              </WriteButton>
+          </div>
+          <div className="text-right mt-3 space-x-3">
+            <div
+              onClick={deleteImgCache}
+              className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400"
+            >
+              Delete Selected
             </div>
+
+            <WriteButton
+              abi={ABI}
+              functionName={"addImages"}
+              args={[
+                imgCache?.filter((v) => v.select).map((v) => v.cid),
+                imgCache?.filter((v) => v.select).map((v) => v.name),
+              ]}
+              value={"0"}
+              onClick={handleStoreSuccess}
+            >
+              <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-b50">
+                Store on the blockchain →
+              </div>
+            </WriteButton>
           </div>
         </div>
-        <div className="w-1/2 ">
+        <div className="w-1/2 min-h-[20rem]">
           <div
             className={`border-dashed w-full border-2 border-gray-300 p-4 rounded-lg text-left h-full  `}
           >
@@ -111,10 +117,29 @@ const PicturePage = () => {
               </div>
             </div>
             <ImgBox list={blockData} setFunc={setBlockData}></ImgBox>
-            <div className="text-right mt-8 space-x-3">
+          </div>
+          <div className="text-right  mt-3 space-x-3">
+            <WriteButton
+              abi={ABI}
+              functionName={"removeImages"}
+              args={[blockData?.filter((v) => v.select).map((v) => v.cid)]}
+              value={"0"}
+              onClick={handleStoreSuccess}
+            >
               <div className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-red-400">
                 Delete Selected
               </div>
+            </WriteButton>
+            <div
+              onClick={() => {
+                refetch();
+                enqueueSnackbar("Refetch success", {
+                  variant: "success",
+                });
+              }}
+              className="inline-block rounded border-2 px-2 border-black cursor-pointer hover:border-gray-400 text-b50"
+            >
+              refetch
             </div>
           </div>
         </div>
@@ -233,7 +258,7 @@ const ImgBox = ({ list, setFunc }) => {
                 </div>
               </div>
               <div className="text-blue-500 mt-2 text-xs font-mono text-left break-all">
-                {  v.name}
+                {v.name}
               </div>
             </div>
           ))}

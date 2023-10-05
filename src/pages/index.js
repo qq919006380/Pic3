@@ -1,20 +1,21 @@
 // Landing page
 import React from "react";
 import PropTypes from "prop-types";
-import { ABI, DEFAULT_CONTRACT_ADDRESS } from "../config/constant";
+import { ABI, CHAIN_MAP } from "../config/constant";
 import { ethers } from "ethers";
-
+import { useChainId } from "wagmi";
 function HomePage(props) {
-  return  (
+  console.log(props);
+  return (
     <div className="bg-gradient-to-b from-indigo-800 to-purple-900 text-white min-h-screen">
       <header className="py-10 text-center">
-        <h1 className="text-4xl font-extrabold">Welcome to Web3</h1>
+        <h1 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">Welcome to Web3</h1>
         <p className="mt-4 text-lg">Explore the Decentralized Future</p>
       </header>
 
       <main className="container mx-auto">
         <section className="bg-white rounded-lg shadow-lg p-8 mb-12">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
+          <h2 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">
             Why Choose Web3?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -75,20 +76,10 @@ HomePage.propTypes = {
 
 export async function getStaticProps() {
   const abi = ABI;
-
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://bsc-testnet.publicnode.com'
-  );
-
-  const contract = new ethers.Contract(DEFAULT_CONTRACT_ADDRESS, abi, provider);
-  // const name = await contract.name();
-  console.log("NAME", contract);
-
   return {
     props: {
-      // name,
       abi,
-    }, // will be passed to the page component as props
+    },  
   };
 }
 

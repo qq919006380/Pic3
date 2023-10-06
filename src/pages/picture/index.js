@@ -57,7 +57,7 @@ const PicturePage = () => {
         return { ...item, isLoading: true };
       })
     );
-  }, blockData,imgCache);
+  }, []);
 
   let deleteImgCache = () => {
     setImgCache((prevCache) => prevCache.filter((item) => !item.select));

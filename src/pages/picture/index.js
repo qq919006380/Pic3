@@ -45,12 +45,12 @@ const PicturePage = () => {
 
   useEffect(() => {
     setImgCache((prevCache) =>
-      prevCache.map((item) => {
+      prevCache?.map((item) => {
         return { ...item, isLoading: true };
       })
     );
     setBlockData((prevCache) =>
-      prevCache.map((item) => {
+      prevCache?.map((item) => {
         return { ...item, isLoading: true };
       })
     );

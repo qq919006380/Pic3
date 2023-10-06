@@ -2,7 +2,7 @@
 
 export const CHAIN_MAP = {
   56: {
-    contarctAddress: "x",
+    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
   },
   97: {
     contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
@@ -10,7 +10,7 @@ export const CHAIN_MAP = {
   },
 
   314: {
-    contarctAddress: "x",
+    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
     chainName: "Filecoin - Mainnet",
   },
   314159: {

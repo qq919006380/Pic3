@@ -17,6 +17,7 @@ const MintPage = (props) => {
     name: "",
     url: "",
   });
+  !imgCache && setImgCache([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +45,6 @@ const MintPage = (props) => {
       });
 
     if (result) {
-      !imgCache && setImgCache([]);
       setCidInfo({ ...result, name: file.name });
 
       let newImgCache = [

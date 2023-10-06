@@ -21,6 +21,8 @@ const PicturePage = () => {
 
   const [blockData, setBlockData] = useState([]);
   const [imgCache, setImgCache] = useLocalStorage("imgCache", []);
+  !imgCache && setImgCache([]);
+
   const {
     data: resBlockData,
     isError,
@@ -44,6 +46,7 @@ const PicturePage = () => {
   }, [resBlockData, address]);
 
   useEffect(() => {
+
     setImgCache((prevCache) =>
       prevCache?.map((item) => {
         return { ...item, isLoading: true };
@@ -54,7 +57,7 @@ const PicturePage = () => {
         return { ...item, isLoading: true };
       })
     );
-  }, []);
+  }, blockData,imgCache);
 
   let deleteImgCache = () => {
     setImgCache((prevCache) => prevCache.filter((item) => !item.select));

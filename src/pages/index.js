@@ -70,7 +70,7 @@ function HomePage(props) {
                 href="https://github.com/qq919006380/Pic3"
                 className="inline-block bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-400 transition-all duration-300"
               >
-                Github
+                Github  
               </a>
             </div>
           </div>

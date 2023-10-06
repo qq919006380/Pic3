@@ -1,4 +1,5 @@
 import ClipboardJS from "clipboard";
+import { toHex, hexToString } from "viem";
 
 export function copyText(textToCopy) {
   return new Promise((resolve, reject) => {
@@ -33,4 +34,23 @@ export function transformString(originalString,range=[4,4]) {
   }
 
   return `${originalString.slice(0, range[0])}...${originalString.slice(-range[1])}`;
+}
+
+
+export function xorEncrypt(text, key, isEncrypt = true) {
+  let result = "";
+  let xxx=''
+  if (!isEncrypt) {
+    xxx = hexToString(text);
+  }else{
+    xxx=text
+  }
+  for (let i = 0, len = xxx.length; i < len; i++) {
+    result += String.fromCharCode(
+      xxx.charCodeAt(i) ^ key.charCodeAt(i % key.length)
+    );
+  }
+
+  const hexData = isEncrypt ? toHex(result) : result;
+  return hexData;
 }

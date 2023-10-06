@@ -9,4 +9,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  document: "./src/_document.js",
 };

@@ -8,6 +8,8 @@ import { useSnackbar } from "notistack";
 import WriteButton from "@/components/button/WriteButton";
 import Table from "@/components/Table";
 import Modal from "react-modal";
+import { xorEncrypt } from "@/utils/tools";
+const key = "pic3-91900";
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("body");
 
@@ -28,13 +30,16 @@ const PicturePage = () => {
     address: CHAIN_MAP[chainId].contarctAddress,
     abi: ABI,
     functionName: "getUserImages",
-    args: [address],
+    account: address,
   });
 
   useEffect(() => {
     console.log(resBlockData);
     if (resBlockData) {
-      setBlockData(resBlockData);
+      let data = resBlockData.map((v) => {
+        return { ...v, cid: xorEncrypt(v.cid, key, false) };
+      });
+      setBlockData(data);
     }
   }, [resBlockData, address]);
 
@@ -57,7 +62,9 @@ const PicturePage = () => {
   let handleStoreSuccess = (args) => {
     // 根据args去删除imgCache
     setImgCache((prevCache) =>
-      prevCache.filter((item) => !args[0].includes(item.cid))
+      prevCache.filter(
+        (item) => !args[0].includes(xorEncrypt(item.cid, key, true))
+      )
     );
     setTimeout(() => {
       refetch();
@@ -93,7 +100,9 @@ const PicturePage = () => {
               abi={ABI}
               functionName={"addImages"}
               args={[
-                imgCache?.filter((v) => v.select).map((v) => v.cid),
+                imgCache
+                  ?.filter((v) => v.select)
+                  .map((v) => xorEncrypt(v.cid, key, true)),
                 imgCache?.filter((v) => v.select).map((v) => v.name),
               ]}
               value={"0"}
@@ -122,7 +131,11 @@ const PicturePage = () => {
             <WriteButton
               abi={ABI}
               functionName={"removeImages"}
-              args={[blockData?.filter((v) => v.select).map((v) => v.cid)]}
+              args={[
+                blockData
+                  ?.filter((v) => v.select)
+                  .map((v) => xorEncrypt(v.cid, key, true)),
+              ]}
               value={"0"}
               onClick={handleStoreSuccess}
             >

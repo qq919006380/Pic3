@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <MainNavgation />
-      <main className={classes.layout}>{children}</main>
+      <main className={`${classes.layout}`}>{children}</main>
       <footer className="tracking-wider py-2 fixed bottom-0 text-center w-full text-gray-500 text-xs">
         <p>
           © 2022 - 2023 Powered by Pic3

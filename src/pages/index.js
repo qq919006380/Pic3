@@ -2,71 +2,101 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ABI, CHAIN_MAP } from "../config/constant";
-
 function HomePage(props) {
-  
   return (
-    <div className="bg-gradient-to-b from-indigo-800 to-purple-900 text-white min-h-screen">
-      <header className="py-10 text-center">
-        <h1 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">
-          Welcome to Web3
-        </h1>
-        <p className="mt-4 text-lg">Explore the Decentralized Future</p>
-      </header>
+    <div className="min-h-screen bg-white text-gray-900">
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Left: Textual Introduction */}
+          <div className="space-y-6">
+            <h1 className="text-4xl font-bold tracking-tight transform hover:scale-105 transition-transform">
+              Pic: Decentralized Blockchain Image Hosting
+            </h1>
+            <p className="text-lg font-medium">
+              Serverless, prioritizing user privacy.
+            </p>
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold underline">
+                Pic vs. Traditional Web2 Image Hosts
+              </h2>
+              <ul className="list-disc pl-5 space-y-2">
+                <li className="hover:text-blue-500 transition-colors">
+                  Decentralized: IPFS distributes images globally, eliminating
+                  reliance on a single server.
+                </li>
+                <li className="hover:text-blue-500 transition-colors">
+                  Permanence: Images on IPFS are permanent, accessible as long
+                  as one node hosts them.
+                </li>
+                <li className="hover:text-blue-500 transition-colors">
+                  Verifiability: Every image on IPFS has a unique CID, ensuring
+                  the image's authenticity.
+                </li>
+                <li className="hover:text-blue-500 transition-colors">
+                  Distributed: IPFS hosting can handle high traffic, free from
+                  single server limitations.
+                </li>
 
-      <main className="container mx-auto">
-        <section className="bg-white rounded-lg shadow-lg p-8 mb-12">
-          <h2 className="block sm:inline bg-gradient-to-r from-highlight to-dark text-transparent bg-clip-text">
-            Why Choose Web3?
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="p-6 border border-gray-200 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Decentralization</h3>
-              <p>
-                Web3 technology removes the need for centralized authorities,
-                creating a more democratic and resilient digital world.
-              </p>
+                <li className="hover:text-blue-500 transition-colors">
+                  Privacy: With images spread across the IPFS network, users
+                  have greater privacy control.
+                </li>
+
+                <li className="hover:text-blue-500 transition-colors">
+                  Open Source: IPFS is fully open-source, allowing for
+                  customization without restrictions.
+                </li>
+              </ul>
             </div>
-            <div className="p-6 border border-gray-200 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Security</h3>
-              <p>
-                Blockchain-based systems provide enhanced security and
-                transparency, reducing the risk of data breaches.
-              </p>
+          </div>
+
+          {/* Right: GIF Introduction */}
+          <div>
+            <div className="p-4 shadow-lg rounded-lg bg-gradient-to-br from-blue-100 to-indigo-200 animate-pulse">
+              <img
+                src="/image/preview.jpg"
+                alt="preview"
+                className=" rounded-lg shadow-inner hover:shadow-xl transition-shadow"
+              />
             </div>
-            <div className="p-6 border border-gray-200 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Privacy</h3>
-              <p>
-                Web3 empowers users to have greater control over their data and
-                online privacy.
-              </p>
+            <div class="space-x-3 mt-3">
+              <a
+                href="/upload"
+                class="inline-block bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition-all duration-300"
+              >
+                Go to upload
+              </a>
+              <a
+                target="_blank"
+                href="https://github.com/qq919006380/Pic3"
+                class="inline-block bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-400 transition-all duration-300"
+              >
+                Github
+              </a>
             </div>
-            <div className="p-6 border border-gray-200 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Innovation</h3>
-              <p>
-                Web3 is open-source, fostering innovation and allowing for
-                creative solutions.
+          </div>
+        </div>
+
+        <div className="mt-20">
+          <h1 class="text-2xl font-bold mb-4">Workflow</h1>
+          <div class="space-x-4 space-y-4">
+            <div class="p-5 inline-block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <p class="text-gray-700">1.  upload content via IPFS connector tools like nft.storage to obtain a CID.</p>
+            </div>
+
+            <div class="p-5 inline-block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <p class="text-gray-700">2. The CID is then transformed into encrypted code using a compression encryption algorithm.</p>
+            </div>
+
+            <div class="p-5 inline-block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <p class="text-gray-700">
+                3. This encrypted code is uploaded to the blockchain via a contract.
               </p>
             </div>
           </div>
-        </section>
-
-        <section className="bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-            Explore the Web3 World
-          </h2>
-          <p className="text-lg">
-            Web3 offers exciting opportunities and applications, including
-            cryptocurrencies, decentralized finance (DeFi), NFTs, and
-            decentralized apps (dApps). Join the Web3 revolution and discover
-            endless possibilities.
-          </p>
-        </section>
-      </main>
-
-      <footer className="bg-indigo-900 text-white text-center py-4">
-        <p>&copy; 2023 Web3 Promotion</p>
-      </footer>
+        </div>
+      </div>
     </div>
   );
 }

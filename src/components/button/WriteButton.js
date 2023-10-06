@@ -77,7 +77,8 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
 
   useEffect(() => {
     if (prepareIsError) {
-      enqueueSnackbar(prepareError.message, { variant: "error" });
+      let message = JSON.parse(JSON.stringify(prepareError))?.shortMessage;
+      enqueueSnackbar(message, { variant: "error" });
     }
   }, [prepareIsError]);
 
@@ -100,8 +101,9 @@ const WriteButton = ({ onClick, children, abi, functionName, value, args }) => {
       </button>
       {txnIsLoading && <CircularProgress />}
       {prepareError && (
-        <div>
-          An error occurred preparing the transaction: {prepareError.message}
+        <div className=" text-xs text-yellow-400 ">
+          {/* {JSON.parse(JSON.stringify(prepareError))?.shortMessage} */}
+          Check if the image CID already exists on the blockchain.
         </div>
       )}
     </>

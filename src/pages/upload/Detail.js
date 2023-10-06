@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { ABI } from "../../config/constant";
 import WriteButton from "../../components/button/WriteButton";
 import Table from "@/components/Table";
- 
-const TableComponent = ({ cid,  name, loading, curBlobUrl }) => {
- 
+import { xorEncrypt } from "@/utils/tools";
+const key = "pic3-91900";
+const TableComponent = ({ cid, name, loading, curBlobUrl }) => {
+   
   return (
     <div className="w-full">
       <div className="text-lg font-semibold mb-2 text-center my-10 space-x-3">
@@ -16,7 +17,7 @@ const TableComponent = ({ cid,  name, loading, curBlobUrl }) => {
               <WriteButton
                 abi={ABI}
                 functionName={"addImages"}
-                args={[[cid || "null"], [name || "null"]]}
+                args={[[cid && xorEncrypt(cid, key,true)], [name]]}
                 value={"0"}
               >
                 <span className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -48,7 +49,7 @@ const TableComponent = ({ cid,  name, loading, curBlobUrl }) => {
           </div>
         </div>
         <div className="w-3/5 ">
-          <Table cid={cid}   name={name} loading={loading}></Table>
+          <Table cid={cid} name={name} loading={loading}></Table>
         </div>
       </div>
     </div>

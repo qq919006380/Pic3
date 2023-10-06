@@ -36,7 +36,7 @@ const PicturePage = () => {
   useEffect(() => {
     console.log(resBlockData);
     if (resBlockData) {
-      let data = resBlockData.map((v) => {
+      let data = resBlockData?.map((v) => {
         return { ...v, cid: xorEncrypt(v.cid, key, false) };
       });
       setBlockData(data);

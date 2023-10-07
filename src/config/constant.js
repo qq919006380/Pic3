@@ -1,16 +1,16 @@
 // 根据不同的链返回不同的合约地址 以及 ABI
 
 export const CHAIN_MAP = {
-  56: {
-    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
-  },
+//   56: {
+//     contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
+//   },
   97: {
     contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
     chainName: "BSC Testnet",
   },
 
   314: {
-    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
+    contarctAddress: "0xb8Ca0CA732E447A3653c3FfaE770296E1a7077cb",
     chainName: "Filecoin - Mainnet",
   },
   314159: {

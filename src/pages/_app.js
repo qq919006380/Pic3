@@ -2,8 +2,8 @@ import React from "react";
 import "../../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { bsc, bscTestnet ,filecoin,filecoinCalibration} from "wagmi/chains";
-import { WagmiConfig,configureChains, createConfig } from "wagmi";
+import { bsc, bscTestnet, filecoin, filecoinCalibration } from "wagmi/chains";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
 import { SnackbarProvider } from "notistack";
@@ -12,31 +12,25 @@ import Layout from "../components/layout/Layout";
 import PropTypes from "prop-types";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bsc, bscTestnet,filecoin,filecoinCalibration],
+  [filecoin, filecoinCalibration, bscTestnet],
   [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
+  appName: "Pic3",
   projectId: "d2ed2b1fc85148af7763557a31a7e332",
   chains,
 });
 
- 
 const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
-  connectors
+  connectors,
 });
-
-
-
-
 
 function MyApp({ Component, pageProps }) {
   return (
-    
     <SnackbarProvider
       maxSnack={3}
       autoHideDuration={3000}

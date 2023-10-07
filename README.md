@@ -36,3 +36,9 @@ The starter is now running on http://localhost:3000.
 - Privacy: With images spread across the IPFS network, usershave greater privacy control.
 
 - Open Source: IPFS is fully open-source,allowing for restrictions.
+
+
+## Workflow
+1. upload content via IPFS connector tools like nft.storage to obtain a CID. 
+2. The CID is then transformed into encrypted code using a compression encryption algorithm. 
+3. This encrypted code is uploaded to the blockchain via a contract.

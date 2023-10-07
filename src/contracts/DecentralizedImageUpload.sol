@@ -6,7 +6,7 @@ contract DecentralizedImageStorage {
         bytes cid; // Content Identifier for the image
         string name; //   name of the image
     }
- 
+
     struct UserProfile {
         ImageDetail[] imageList; // List of images for the user
         mapping(bytes => uint256) imageIndex; // Mapping of CID to its index in the list for O(1) removal

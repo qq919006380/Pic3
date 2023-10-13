@@ -9,13 +9,13 @@ export const CHAIN_MAP = {
     chainName: "BSC Testnet",
   },
   324: {
-    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
+    contarctAddress: "0xA852263A21EB1EF5F6ABB0Acc7e747E823D8bf95",
     chainName: "zkSync Era Mainnet",
   },
-  280: {
-    contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
-    chainName: "zkSync Era Testnet",
-  },
+//   280: {
+//     contarctAddress: "0x2821f4dcaa5D6EF2791b9A7DF2cb12E8D9456D55",
+//     chainName: "zkSync Era Testnet",
+//   },
 
   314: {
     contarctAddress: "0xb8Ca0CA732E447A3653c3FfaE770296E1a7077cb",
